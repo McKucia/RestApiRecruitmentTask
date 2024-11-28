@@ -11,11 +11,13 @@ namespace RestApiRecruitmentTask.Api.Controllers
     public class TiresController : ControllerBase
     {
         private readonly ITireService _tireService;
+        private readonly IProducerService _producerService; // for validation
         private readonly IMapper _mapper;
 
-        public TiresController(ITireService tireService, IMapper mapper)
+        public TiresController(ITireService tireService, IProducerService producerService, IMapper mapper)
         {
             _tireService = tireService;
+            _producerService = producerService;
             _mapper = mapper;
         }
 
@@ -43,21 +45,26 @@ namespace RestApiRecruitmentTask.Api.Controllers
         [HttpPost]
         public IActionResult Create(TireViewModel tireViewModel)
         {
-            try
-            {
-                var tire = _mapper.Map<Tire>(tireViewModel);
-                _tireService.Add(tire);
-                return CreatedAtAction(nameof(GetById), new { id = tire.Id }, tireViewModel);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { Message = ex.Message });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var producer = _producerService.GetById(tireViewModel.ProducerId);
+
+            if (producer == null)
+                return NotFound($"Cannot add tire - producer with ID {tireViewModel.ProducerId} not found.");
+
+            var tire = _mapper.Map<Tire>(tireViewModel);
+            _tireService.Add(tire);
+            var createdTire = _mapper.Map<TireViewModel>(tire);
+            return CreatedAtAction(nameof(GetById), new { id = tire.Id }, createdTire);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, TireViewModel tireViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var tire = _tireService.GetById(id);
 
             if (tire == null) return NotFound();

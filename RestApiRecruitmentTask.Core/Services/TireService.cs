@@ -24,8 +24,7 @@ namespace RestApiRecruitmentTask.Core.Services
 
         public void Add(Tire tire)
         {
-            if (_tires.Any(t => t.Id == tire.Id))
-                throw new InvalidOperationException($"Tire with Id {tire.Id} already exists.");
+            tire.Id = _tires.Count > 0 ? _tires.Max(t => t.Id) + 1 : 1;
 
             _tires.Add(tire);
         }

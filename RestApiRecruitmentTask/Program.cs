@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using RestApiRecruitmentTask.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);

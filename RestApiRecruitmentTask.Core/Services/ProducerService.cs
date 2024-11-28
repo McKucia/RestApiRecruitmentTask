@@ -29,8 +29,7 @@ namespace RestApiRecruitmentTask.Core.Services
 
         public void Add(Producer producer)
         {
-            if (_producers.Any(t => t.Id == producer.Id))
-                throw new InvalidOperationException($"Tire with Id {producer.Id} already exists.");
+            producer.Id = _producers.Count > 0 ? _producers.Max(p => p.Id) + 1 : 1;
 
             _producers.Add(producer);
         }

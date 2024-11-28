@@ -43,21 +43,21 @@ namespace RestApiRecruitmentTask.Api.Controllers
         [HttpPost]
         public IActionResult Create(ProducerViewModel producerViewModel)
         {
-            try
-            {
-                var producer = _mapper.Map<Producer>(producerViewModel);
-                _producerService.Add(producer);
-                return CreatedAtAction(nameof(GetById), new { id = producer.Id }, producerViewModel);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { Message = ex.Message });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var producer = _mapper.Map<Producer>(producerViewModel);
+            _producerService.Add(producer);
+            var createdProducer = _mapper.Map<ProducerViewModel>(producer);
+            return CreatedAtAction(nameof(GetById), new { id = producer.Id }, createdProducer);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, ProducerViewModel producerViewModel)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var producer = _producerService.GetById(id);
 
             if (producer == null) return NotFound();
