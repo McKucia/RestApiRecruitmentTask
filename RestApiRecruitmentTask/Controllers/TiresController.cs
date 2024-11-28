@@ -48,7 +48,7 @@ namespace RestApiRecruitmentTask.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var producer = _producerService.GetById(tireViewModel.ProducerId);
+            try
 
             if (producer == null)
                 return NotFound($"Cannot add tire - producer with ID {tireViewModel.ProducerId} not found.");
