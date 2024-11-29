@@ -1,57 +1,85 @@
-﻿using RestApiRecruitmentTask.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RestApiRecruitmentTask.Core.Models;
 
 namespace RestApiRecruitmentTask.Core.Services
 {
     public interface IProducerService
     {
         IEnumerable<Producer> GetAll();
-        Producer GetById(int id);
+        Producer? GetById(int id);
         void Add(Producer producer);
-        void Update(Producer producer);
-        void Delete(int id);
+        bool Update(int id, Producer producer);
+        bool Delete(int id);
     }
 
     public class ProducerService : IProducerService
     {
-        private readonly List<Producer> _producers = new();
+        private readonly RestApiRecruitmentTaskDbContext _dbContext;
         private readonly ITireService _tireService;
 
-        public ProducerService(ITireService tireService)
+        public ProducerService(ITireService tireService, RestApiRecruitmentTaskDbContext dbContext)
         {
+            _dbContext = dbContext;
             _tireService = tireService;
         }
 
-        public IEnumerable<Producer> GetAll() => 
-            _producers;
+        public IEnumerable<Producer> GetAll()
+        {
+            return _dbContext
+                .Producers
+                .Include(p => p.Tires)
+                .ToList();
+        }
 
-        public Producer GetById(int id) =>
-            _producers.FirstOrDefault(p => p.Id == id);
+        public Producer? GetById(int id)
+        {
+            return _dbContext
+                .Producers
+                .FirstOrDefault(p => p.Id == id);
+        }
 
         public void Add(Producer producer)
         {
-            producer.Id = _producers.Count > 0 ? _producers.Max(p => p.Id) + 1 : 1;
-
-            _producers.Add(producer);
+            _dbContext.Producers.Add(producer);
+            _dbContext.SaveChanges();
         }
 
-        public void Update(Producer producer)
+        public bool Update(int id, Producer producer)
         {
-            var existingProducer = GetById(producer.Id);
+            var existingProducer = GetById(id);
+
             if (existingProducer != null)
             {
                 existingProducer.Name = producer.Name;
                 existingProducer.Class = producer.Class;
+
+                _dbContext.Entry(existingProducer).State = EntityState.Modified;
+                _dbContext.SaveChanges();
+
+                return true;
             }
+            else
+                return false;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             var producer = GetById(id);
+
             if (producer != null)
             {
                 _tireService.DeleteByProducer(producer.Id);
-                _producers.Remove(producer);
+
+                _dbContext
+                    .Producers
+                    .Remove(producer);
+
+                _dbContext.SaveChanges();
+
+                return true;
             }
+            else
+                return false;
         }
     }
 }

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiRecruitmentTask.Api", "RestApiRecruitmentTask\RestApiRecruitmentTask.Api.csproj", "{07222A4C-8892-45D3-9D21-82B4C6DC07D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApiRecruitmentTask.Core", "RestApiRecruitmentTask.Core\RestApiRecruitmentTask.Core.csproj", "{13A0D5B8-54BD-4C21-82D9-9519BBEED589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiRecruitmentTask.Core", "RestApiRecruitmentTask.Core\RestApiRecruitmentTask.Core.csproj", "{13A0D5B8-54BD-4C21-82D9-9519BBEED589}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApiRecruitmentTask.Test", "RestApiRecruitmentTask.Test\RestApiRecruitmentTask.Test.csproj", "{316C7E33-A87F-4996-88B6-89074F6104AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{13A0D5B8-54BD-4C21-82D9-9519BBEED589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13A0D5B8-54BD-4C21-82D9-9519BBEED589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13A0D5B8-54BD-4C21-82D9-9519BBEED589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{316C7E33-A87F-4996-88B6-89074F6104AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{316C7E33-A87F-4996-88B6-89074F6104AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{316C7E33-A87F-4996-88B6-89074F6104AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{316C7E33-A87F-4996-88B6-89074F6104AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
