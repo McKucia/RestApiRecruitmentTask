@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RestApiRecruitmentTask.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace RestApiRecruitmentTask.Api.ViewModels
 {
@@ -10,5 +11,6 @@ namespace RestApiRecruitmentTask.Api.ViewModels
         [Required]
         [StringLength(15, MinimumLength = 3, ErrorMessage = "Class must be between 3 and 15 characters.")]
         public string Class { get; set; }
+        public List<Tire> Tires { get; set; }
     }
 }
