@@ -9,12 +9,10 @@ namespace MyWebAPI
         public MappingProfile()
         {
             CreateMap<Tire, TireViewModel>()
-                .ReverseMap() // from view model to tire and from tire to view model
-                .ForMember(dest => dest.Id, opt => opt.Ignore()); // ignore Id in mapping
+                .ReverseMap(); // from view model to tire and from tire to view model
 
             CreateMap<Producer, ProducerViewModel>()
-                .ReverseMap()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ReverseMap();
         }
     }
 }

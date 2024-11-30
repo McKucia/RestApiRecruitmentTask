@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Class { get; set; }
-        public List<Tire> Tires { get; set; }
+        public virtual List<Tire> Tires { get; set; }
     }
 }

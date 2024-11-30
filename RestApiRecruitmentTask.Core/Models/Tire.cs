@@ -6,6 +6,6 @@
         public string Size { get; set; }
         public string TreadName { get; set; }
         public int ProducerId { get; set; }
-        public Producer Producer { get; set; }
+        public virtual Producer Producer { get; set; }
     }
 }

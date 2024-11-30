@@ -87,7 +87,7 @@ namespace RestApiRecruitmentTask.Core.Services
 
             if (relatedTires is not null && relatedTires.Any())
             {
-                _dbContext.Remove(relatedTires);
+                _dbContext.Tires.RemoveRange(relatedTires);
                 _dbContext.SaveChanges();
             }
         }
